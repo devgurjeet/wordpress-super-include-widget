@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 /*
 Plugin Name: Super Include Widget
 Plugin URI: https://github.com/devgurjeet/wordpress-super-include-widget
@@ -32,21 +34,24 @@ class SI_Widget extends WP_Widget{
 
 
 	function AddFeed( $attr  ){
-		$AddFilePath = 	$attr['AddFilePath'];
-		echo '<div class="si_widget_block">';			
-			echo $structure;
-			include $AddFilePath;
-		echo "</div>";
+		$FilePath = 	$attr['FilePath'];
+
+		if ((file_exists($FilePath)) && ($FilePath !== '')) {		    
+		    echo '<div class="si_widget_block">';
+				include $FilePath;
+			echo "</div>";
+		}
+		
 	}
 
 	// Creating widget front-end
 	// This is where the action happens
 	public function widget( $args, $instance ) {
 
-		apply_filters( 'widget_title', $instance['AddFilePath'] );		
+		apply_filters( 'widget_title', $instance['FilePath'] );		
 		// before and after widget arguments are defined by themes
-		$AddFilePath 			= 	$instance['AddFilePath'];
-		$args['AddFilePath'] 	=	$AddFilePath;
+		$FilePath 			= 	$instance['FilePath'];
+		$args['FilePath'] 	=	$FilePath;
 
 		$this->addFeed($args);
 	}
@@ -55,11 +60,11 @@ class SI_Widget extends WP_Widget{
 	// Widget Backend 
 	public function form( $instance ) {
 		// Widget admin form
-		$AddFilePath = $instance['AddFilePath'];
+		$FilePath = $instance['FilePath'];
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'AddFilePath' ); ?>"><?php _e( 'File Path:' ); ?></label> 		
-			<input class="widefat" id="<?php echo $this->get_field_id( 'AddFilePath' ); ?>" name="<?php echo $this->get_field_name( 'AddFilePath' ); ?>" type="text" value="<?php echo esc_attr( $AddFilePath ); ?>" />
+			<label for="<?php echo $this->get_field_id( 'FilePath' ); ?>"><?php _e( 'File Path:' ); ?></label> 		
+			<input class="widefat" id="<?php echo $this->get_field_id( 'FilePath' ); ?>" name="<?php echo $this->get_field_name( 'FilePath' ); ?>" type="text" value="<?php echo esc_attr( $FilePath ); ?>" />
 		</p>
 		<?php 
 	}
@@ -67,7 +72,7 @@ class SI_Widget extends WP_Widget{
 	// Updating widget replacing old instances with new
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		$instance['AddFilePath'] = ( ! empty( $new_instance['AddFilePath'] ) ) ? strip_tags( $new_instance['AddFilePath'] ) : '';	
+		$instance['FilePath'] = ( ! empty( $new_instance['FilePath'] ) ) ? strip_tags( $new_instance['FilePath'] ) : '';	
 
 		return $instance;
 	}
