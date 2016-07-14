@@ -1,6 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 /*
 Plugin Name: Super Include Widget
 Plugin URI: https://github.com/devgurjeet/wordpress-super-include-widget
