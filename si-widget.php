@@ -23,7 +23,7 @@ class SI_Widget extends WP_Widget{
 		__('Super Include Widget', 'si_widget_domain'), 
 
 		// Widget description
-		array( 'description' => __( 'Widget for including external Files', 'si_widget_domain' ), ) );
+		array( 'description' => __( 'Widget for including external Files. Example: /var/www/html/hello.php', 'si_widget_domain' ), ) );
 
 		//** Action to register Widget. **//
 		add_action( 'widgets_init', array(&$this, 'aw_load_widget') );
